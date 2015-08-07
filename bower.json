@@ -1,0 +1,27 @@
+{
+  "name": "ng-table-plugins",
+  "description": "Ng-Table",
+  "version": "0.1.0",
+  "main": [
+    "ng-table-plugins.js"
+  ],
+  "ignore": [
+    "src",
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": ">=1.2.0-rc.2",
+    "ng-table": ">= 0.8.2"
+
+  },
+  "homepage": "https://github.com/nucle/ng-table-plugins",
+  "authors": [
+    "Christian Behon <christian.behon@gmail.com>"
+  ],
+  "license": "MIT"
+}
+
