@@ -1,13 +1,11 @@
 path = require 'path'
 
-# Build configurations.
 module.exports = (grunt) ->
     grunt.initConfig
         cmpnt: grunt.file.readJSON('bower.json'),
         banner: '/*! ngTablePlugins v<%= cmpnt.version %> by Christian Behon(christian.behon@knusperleicht.at) - ' +
-                    'https://github.com/nucle/ng-table-plugins - New BSD License */\n',
+                    'https://github.com/nucle/ng-table-plugins - Apache License Version 2.0 */\n',
             
-        # Deletes built file and temp directories.
         clean:
             working:
                 src: [
@@ -17,8 +15,7 @@ module.exports = (grunt) ->
                 ]
 
         uglify:
-            # concat js files before minification
-            js:
+           js:
                 src: ['ng-table-plugins.src.js']
                 dest: 'ng-table-plugins.js'
                 options:
@@ -26,7 +23,6 @@ module.exports = (grunt) ->
                   sourceMap: (fileName) ->
                     fileName.replace /\.js$/, '.map'
         concat:
-            # concat js files before minification
             js:
                 src: [
                     'src/scripts/*.js'

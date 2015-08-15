@@ -1,6 +1,6 @@
 {
   "name": "ng-table-plugins",
-  "description": "Ng-Table",
+  "description": "Ng-Table-Plugins",
   "version": "0.1.0",
   "main": [
     "ng-table-plugins.js"
@@ -14,14 +14,16 @@
     "tests"
   ],
   "dependencies": {
-    "angular": ">=1.2.0-rc.2",
-    "ng-table": ">= 0.8.2"
+    "angular": ">=1.2.0",
+    "ng-table": ">= 1.0.0-alpha.3",
+    "bootstrap": ">=3.3.5",
+    "jquery": ">=1.11.0"
 
   },
   "homepage": "https://github.com/nucle/ng-table-plugins",
   "authors": [
-    "Christian Behon <christian.behon@gmail.com>"
+    "Christian Behon <christian.behon@knusperleicht.at>"
   ],
-  "license": "MIT"
+  "license": "Apache License Version 2.0"
 }
 
