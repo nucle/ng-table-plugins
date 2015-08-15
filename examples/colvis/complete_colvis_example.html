@@ -26,14 +26,14 @@
     <p><strong>Page:</strong> {{tableParams.page()}}</p>
     <p><strong>Count per page:</strong> {{tableParams.count()}}</p>
 
-    <div class="btn-group" dropdown data-ng-click="visib.generate($event)" >
-        <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
+    <div class="btn-group" dropdown  >
+        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-ng-click="cv.generate($event)">
             Action <span class="caret"></span>
 
         </button>
 
     </div>
-        <table ng-table="tableParams" class="table ng-table-responsive"  visible-rows="[0,1,2]" data-col-visibility="visib">
+        <table ng-table="tableParams" class="table ng-table-responsive" col-vis-storage="[true,'user']" col-vis-rows="[0,1,2]" col-vis="cv">
             <tr ng-repeat="user in $data">
                 <td data-title="'Name'">
                     {{user.name}}
