@@ -1,9 +1,12 @@
-/**
- * Created by nucle on 08.08.15.
- */
+ /**
+  * ngTablePlugins: ngTable + Angular JS
+  *
+  * @created 08.08.15
+  * @author Christian Behon <christian.behon@knusperleicht.at>
+  * @url https://github.com/nucle/ng-table-plugins
+  * @license Apache License Version 2.0 <https://www.apache.org/licenses/LICENSE-2.0>
+  */
 var ngTablePlugins = angular.module('ngTablePlugins', []);
-
-
 
 (function () {
     "use strict";
