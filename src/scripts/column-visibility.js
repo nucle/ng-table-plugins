@@ -8,7 +8,7 @@
 (function () {
     "use strict";
 
-    angular.module('ngTablePlugins', [])
+    angular.module('ngTablePlugins', ['ngTablePluginsTemplates'])
         .directive('ngTableColumnsVisibility', columnVisibility);
 
     columnVisibility.$inject = [];
