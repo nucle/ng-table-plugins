@@ -1,83 +1,85 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="viewport" content="width=device-width">
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
 
-        <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
 
-        <script src="../../bower_components/jquery/dist/jquery.js"></script>
-        <script src="../../bower_components/angular/angular.js"></script>
-        <script src="../../bower_components/ng-table/dist/ng-table.js"></script>
-        <script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="../../src/scripts/column-visibility.js"></script>
-        <!--<link rel="stylesheet" href="../../bower_components/ng-table/dist/ng-table.css">-->
-    </head>
-<body ng-app="main">
-<h1>Table with pagination</h1>
+    <script src="../../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../../bower_components/angular/angular.js"></script>
+    <script src="../../bower_components/ng-table/dist/ng-table.js"></script>
+    <script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../ng-table-plugins.js"></script>
+</head>
+<body data-ng-app="app">
+<h1 style="margin: 16px;">Table with column visibility</h1>
 
-<div ng-controller="DemoCtrl">
+<div data-ng-controller="DemoCtrl as ctrl" style="margin: 16px;">
 
     <p><strong>Page:</strong> {{tableParams.page()}}</p>
+
     <p><strong>Count per page:</strong> {{tableParams.count()}}</p>
 
-    <div class="btn-group" dropdown   data-ng-click="cv.generate($event)">
-        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-            Action <span class="caret"></span>
+    <ng-table-columns-visibility columns="ctrl.cols"></ng-table-columns-visibility>
 
-        </button>
+    <table data-ng-table="tableParams" data-ng-table-columns-binding="ctrl.cols" class="table ng-table-responsive">
+        <tr data-ng-repeat="user in $data">
+            <td data-title="'Name'" ng-if="true">{{user.name}}</td>
+            <td data-title="'Age'" ng-if="true">{{user.age}}</td>
+            <td data-title="'Gender'" ng-if="false">{{user.gender}}</td>
+        </tr>
+    </table>
 
-    </div>
-        <table ng-table="tableParams" class="table ng-table-responsive" col-vis-storage="[true,'user']" col-vis-rows="[0]" data-ng-init="cv.init()" col-vis="cv">
-            <tr ng-repeat="user in $data">
-                <td data-title="'Name'">
-                    {{user.name}}
-                </td>
-                <td data-title="'Age'">
-                    {{user.age}}
-                </td>
-            </tr>
-        </table>
+    <script>
+        var app = angular.module('app', ['ngTable', 'ngTablePlugins', 'ngTablePluginsTemplates']).
+                controller('DemoCtrl', function ($scope, NgTableParams) {
+                    var data = [{name: "Moroni", age: 50, gender: 'f'},
+                        {name: "Gayla Wacker", age: 43, gender: 'm'},
+                        {name: "Loria Hepburn", age: 27, gender: 'f'},
+                        {name: "Fay Hanscom", age: 29, gender: 'm'},
+                        {name: "Donn Scoggin", age: 34, gender: 'f'},
+                        {name: "Gary Ruffo", age: 43, gender: 'm'},
+                        {name: "Laurette Bedford", age: 27, gender: 'f'},
+                        {name: "Hue Noland", age: 29, gender: 'm'},
+                        {name: "Juliana Gilliland", age: 34, gender: 'f'},
+                        {name: "Issac Sandifer", age: 43, gender: 'f'},
+                        {name: "Jody Gagne", age: 27, gender: 'm'},
+                        {name: "Casie Blye", age: 29, gender: 'm'},
+                        {name: "Jolie Scoggins", age: 34, gender: 'f'},
+                        {name: "Sharyn Marchese", age: 43, gender: 'm'},
+                        {name: "Carmelita Boatwright", age: 27, gender: 'f'},
+                        {name: "Marjorie Sondag", age: 29, gender: 'm'},
+                        {name: "Hayley Schiavone", age: 34, gender: 'm'},
+                        {name: "Vena Ropp", age: 34, gender: 'm'},
+                        {name: "Georgianne Cammack", age: 98, gender: 'f'},
+                        {name: "Margaret Joubert", age: 80, gender: 'f'},
+                        {name: "Frida Grave", age: 56, gender: 'f'}
+                    ];
 
-        <script>
-        var app = angular.module('main', ['ngTable','ngTablePlugins']).
-        controller('DemoCtrl', function($scope, NgTableParams) {
-            var data = [{name: "Moroni", age: 50},
-                        {name: "Tiancum", age: 43},
-                        {name: "Jacob", age: 27},
-                        {name: "Nephi", age: 29},
-                        {name: "Enos", age: 34},
-                        {name: "Tiancum", age: 43},
-                        {name: "Jacob", age: 27},
-                        {name: "Nephi", age: 29},
-                        {name: "Enos", age: 34},
-                        {name: "Tiancum", age: 43},
-                        {name: "Jacob", age: 27},
-                        {name: "Nephi", age: 29},
-                        {name: "Enos", age: 34},
-                        {name: "Tiancum", age: 43},
-                        {name: "Jacob", age: 27},
-                        {name: "Nephi", age: 29},
-                        {name: "Enos", age: 34}];
-            $scope.tableParams = new NgTableParams({
-                page: 1,            // show first page
-                count: 10           // count per page
-            }, {
-                total: data.length, // length of data
-                getData: function($defer, params) {
-                    $defer.resolve(data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-                }
-            });
-        })
-        </script>
+                    $scope.tableParams = new NgTableParams({
+                        page: 1,
+                        count: 8
+                    }, {
+                        total: data.length, // length of data
+                        getData: function ($defer, params) {
+                            $defer.resolve(data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                        }
+                    });
+                })
+    </script>
 
 </div>
 
 
-    </body>
+</body>
 </html>

@@ -1,7 +1,7 @@
 {
   "name": "ng-table-plugins",
   "description": "Ng-Table-Plugins",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "main": [
     "ng-table-plugins.js"
   ],
@@ -14,7 +14,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular": ">=1.2.0",
+    "angular": ">=1.4.6",
     "ng-table": ">= 1.0.0-alpha.6",
     "bootstrap": ">=3.3.5",
     "jquery": ">=1.11.0"
@@ -24,6 +24,6 @@
   "authors": [
     "Christian Behon <christian.behon@knusperleicht.at>"
   ],
-  "license": "Apache License Version 2.0"
+  "license": "BSD"
 }
 

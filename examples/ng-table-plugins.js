@@ -64,3 +64,7 @@
         }
     }
 })();
+angular.module('ngTablePluginsTemplates', []).run(['$templateCache', function($templateCache) {
+  $templateCache.put("templates/column-visibility.html",
+    "<div class=btn-group><div class=dropdown><button class=\"btn btn-white btn-sm dropdown-toggle\" type=button data-toggle=dropdown>Hide/show columns <span class=caret></span></button><ul class=dropdown-menu><li data-ng-repeat=\"column in columns\" data-ng-click=ctrl.onColumnClicked(column);$event.stopPropagation();><div class=checkbox><label data-ng-if=!column.show() style=opacity:0.5><input type=checkbox>{{column.title()}}</label><label data-ng-if=column.show()><input type=checkbox checked>{{column.title()}}</label></div></li></ul></div></div>");
+}]);
