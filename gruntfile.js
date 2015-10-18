@@ -30,7 +30,7 @@ module.exports = function (grunt) {
             },
             css: {
                 src: [
-                    'src/scripts/style.css'
+                    'src/css/style.css'
                 ],
                 dest: 'dist/ng-table-plugins.css'
 
@@ -67,7 +67,7 @@ module.exports = function (grunt) {
             main: {
                 expand: true,
                 flatten: true,
-                src: ['dist/*'],
+                src: ['dist/**'],
                 dest: 'examples/'
             }
         },
@@ -111,7 +111,6 @@ module.exports = function (grunt) {
                 }
             }
         }
-
     });
 
     grunt.registerTask('build', ['clean', 'html2js', 'concat', 'uglify', 'cssmin', 'clean:rem', 'copy']);

@@ -1,0 +1,43 @@
+.ngtp-noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.ngtp-dropdown-btn {
+    color: #333;
+    background-color: #FFFFFF;
+    border-color: #8c8c8c;
+}
+
+.ngtp-checkbox-enabled .checkbox {
+    float: left;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.ngtp-checkbox-disabled .checkbox{
+    float: left;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.ngtp-checkbox-label-enabled {
+    margin-left: 8px;
+}
+
+.ngtp-checkbox-label-disabled {
+    opacity: 0.5;
+    margin-left: 8px;
+}
+
+.ngtp-checkbox-text-enabled {
+    margin-left: 8px;
+}
+
+.ngtp-checkbox-text-disabled {
+    margin-left: 8px;
+}
