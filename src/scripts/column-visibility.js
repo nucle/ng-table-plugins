@@ -17,7 +17,8 @@
         return {
             restrict: 'E',
             scope: {
-                columns: '='
+                columns: '=',
+                config: '@'
             },
             replace: true,
             templateUrl: 'templates/column-visibility.html',
@@ -30,14 +31,26 @@
         };
 
         function link(scope, element, attrs) {
+            var hasStorage = false;
+
+            if (attrs.config !== undefined) {
+                var config = angular.fromJson(attrs.config);
+                hasStorage = true;
+                scope.ctrl.setTablePrefix(config.prefix);
+            }
+
             scope.$watch('columns', function (columns, oldValue) {
                 angular.forEach(columns, function (column) {
-                    var visible = sessionStorage.getItem(column.title());
-                    if (visible != null) {
-                        column.show(Boolean(visible == 0));
-                        console.log(column.title());
-                        console.log(visible);
+                    if (hasStorage) {
+                        var visible = sessionStorage.getItem(scope.ctrl.key(column.title()));
+                        if (visible != null) {
+                            column.show(Boolean(visible == 0));
+                        }
+                    } else {
+                        column.show(true);
                     }
+                    console.log(column.title());
+                    console.log(visible);
 
                 });
                 console.log(element);
@@ -49,18 +62,28 @@
 
     function VisibilityCtrl() {
         var vm = this;
-
+        vm.prefix = '';
         vm.onColumnClicked = onColumnClicked;
+        vm.setTablePrefix = setTablePrefix;
+        vm.key = key;
+
+        function setTablePrefix(prefix) {
+            vm.prefix = prefix;
+        }
 
         function onColumnClicked(column) {
             if (column.show()) {
                 column.show(false);
-                sessionStorage.setItem(column.title(), 1);
+                sessionStorage.setItem(key(column.title()), 1);
             } else {
                 column.show(true);
-                sessionStorage.setItem(column.title(), 0);
+                sessionStorage.setItem(key(column.title()), 0);
             }
             console.log(column.title());
+        }
+
+        function key(value) {
+            return value + vm.prefix;
         }
     }
 })();
