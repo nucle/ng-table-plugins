@@ -1,6 +1,7 @@
 /**
- * ngTablePlugins: Table + Angular JS + Plugin
+ * ngTablePlugins: angular js + ngTable + plugins
  *
+ * @version 0.3
  * @author Christian Behon <christian.behon@knusperleicht.at>
  * @url https://github.com/nucle/ng-table-plugins
  * @license New BSD License <http://creativecommons.org/licenses/BSD/>
@@ -9,11 +10,11 @@
     "use strict";
 
     angular.module('ngTablePlugins', ['ngTablePluginsTemplates'])
-        .directive('ngTableColumnsVisibility', columnVisibility);
+        .directive('ngTableColumnsVisibility', ColumnVisibility);
 
-    columnVisibility.$inject = [];
+    ColumnVisibility.$inject = [];
 
-    function columnVisibility() {
+    function ColumnVisibility() {
 
         var hasStorage = false;
         var tableId = '';
