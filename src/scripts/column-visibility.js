@@ -58,10 +58,10 @@
                 scope.ctrl.setTableId(tableId);
             }
             if ("saveState" in attrs) {
-                hasStorage = attrs.storage;
+                hasStorage = attrs.saveState;
             }
             if ("storageType" in attrs) {
-                setStorageType(attrs.storageType);
+                scope.ctrl.setStorageType(attrs.storageType);
             }
         }
     }
@@ -75,7 +75,7 @@
         vm.storageType = 0;
         vm.getValue = getValue;
         vm.onColumnClicked = onColumnClicked;
-        vm.setTablePrefix = setTableId;
+        vm.setTableId = setTableId;
         vm.setStorageType = setStorageType;
 
         function setTableId(id) {
@@ -89,7 +89,7 @@
         function onColumnClicked(column) {
             if (column.show()) {
                 column.show(false);
-                if (vm.storageType == 0) {
+                if (vm.storageType === 0) {
                     sessionStorage.setItem(key(column.title()), 1);
                 } else {
                     localStorage.setItem(key(column.title()), 1);
@@ -105,7 +105,7 @@
         }
 
         function getValue(val) {
-            if (vm.storageType == 0) {
+            if (vm.storageType === 0) {
                 return sessionStorage.getItem(key(val));
             } else {
                 return localStorage.getItem(key(val));

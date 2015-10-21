@@ -24,7 +24,7 @@ module.exports = function (grunt) {
                 src: [
                     // app
                     'src/scripts/column-visibility.js',
-                    //'src/scripts/export-table-data.js',
+                    'src/scripts/export-table-data.js',
                     'dist/ng-table-plugins-templates.js'
                 ],
                 dest: 'dist/ng-table-plugins.js'

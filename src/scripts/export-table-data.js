@@ -9,7 +9,7 @@
 (function () {
     "use strict";
 
-    angular.module('ngTablePlugins', [])
+    angular.module('ngTablePlugins')
         .directive('ngTableExporter', Exporter);
 
     Exporter.$inject = [];
