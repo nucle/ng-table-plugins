@@ -14,11 +14,16 @@
     columnVisibility.$inject = [];
 
     function columnVisibility() {
+
+        var hasStorage = false;
+        var tableId = '';
+
         return {
             restrict: 'E',
             scope: {
                 columns: '=',
-                config: '@'
+                id: '@',
+                storage: '@'
             },
             replace: true,
             templateUrl: 'templates/column-visibility.html',
@@ -31,20 +36,13 @@
         };
 
         function link(scope, element, attrs) {
-            var hasStorage = false;
-
-            if (attrs.config !== undefined) {
-                var config = angular.fromJson(attrs.config);
-                hasStorage = true;
-                scope.ctrl.setTablePrefix(config.prefix);
-            }
-
+            checkAttributes(attrs, scope);
             scope.$watch('columns', function (columns, oldValue) {
                 angular.forEach(columns, function (column) {
-                    if (hasStorage) {
+                    if (hasStorage === 'true') {
                         var visible = sessionStorage.getItem(scope.ctrl.key(column.title()));
                         if (visible != null) {
-                            column.show(Boolean(visible == 0));
+                            column.show(visible == 0);
                         }
                     } else {
                         column.show(true);
@@ -55,6 +53,16 @@
                 });
                 console.log(element);
             });
+        }
+
+        function checkAttributes(attrs, scope) {
+            if ("id" in attrs) {
+                tableId = attrs.id;
+                scope.ctrl.setTablePrefix(tableId);
+            }
+            if ("storage" in attrs) {
+                hasStorage = attrs.storage;
+            }
         }
     }
 
