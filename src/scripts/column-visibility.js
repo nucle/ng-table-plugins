@@ -47,18 +47,14 @@
                     } else {
                         column.show(true);
                     }
-                    console.log(column.title());
-                    console.log(visible);
-
                 });
-                console.log(element);
             });
         }
 
         function checkAttributes(attrs, scope) {
             if ("id" in attrs) {
                 tableId = attrs.id;
-                scope.ctrl.setTablePrefix(tableId);
+                scope.ctrl.setTableId(tableId);
             }
             if ("storage" in attrs) {
                 hasStorage = attrs.storage;
@@ -70,13 +66,13 @@
 
     function VisibilityCtrl() {
         var vm = this;
-        vm.prefix = '';
+        vm.id = '';
         vm.onColumnClicked = onColumnClicked;
-        vm.setTablePrefix = setTablePrefix;
+        vm.setTablePrefix = setTableId;
         vm.key = key;
 
-        function setTablePrefix(prefix) {
-            vm.prefix = prefix;
+        function setTableId(id) {
+            vm.id = id;
         }
 
         function onColumnClicked(column) {
