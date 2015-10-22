@@ -23,10 +23,10 @@ module.exports = function (grunt) {
             js: {
                 src: [
                     // app
-                    'src/scripts/ngTp-module.js',
-                    'src/scripts/ngTp-column-visibility.js',
+                    'src/scripts/ngtp-module.js',
+                    'src/scripts/ngtp-column-visibility.js',
                    // 'src/scripts/ngTp-export.js',
-                    'src/scripts/ngTp-storage.js',
+                    'src/scripts/ngtp-storage.js',
 
                     'dist/ng-table-plugins-templates.js'
                 ],
