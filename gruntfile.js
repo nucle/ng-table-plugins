@@ -23,8 +23,9 @@ module.exports = function (grunt) {
             js: {
                 src: [
                     // app
-                    'src/scripts/column-visibility.js',
-                    'src/scripts/export-table-data.js',
+                    'src/scripts/ngTablePlugins-module.js',
+                    'src/scripts/ngTablePlugins-column-visibility.js',
+                    'src/scripts/ngTablePlugins-export.js',
                     'dist/ng-table-plugins-templates.js'
                 ],
                 dest: 'dist/ng-table-plugins.js'
@@ -107,7 +108,7 @@ module.exports = function (grunt) {
             "prod": {
                 "web/config.js": function (fs, fd, done) {
                     fs.writeSync(fd, 'var debug = false;\n');
-                    fs.writeSync(fd, 'var version = "v0.7.7";');
+                    fs.writeSync(fd, 'var version = "v0.0.1";');
                     done();
                 }
             }
@@ -115,4 +116,5 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('build', ['clean', 'html2js', 'concat', 'uglify', 'cssmin', 'clean:rem', 'copy']);
+    grunt.registerTask('release', ['clean', 'html2js', 'concat', 'uglify', 'cssmin', 'clean:rem', 'copy']);
 };

@@ -1,6 +1,20 @@
 /**
  * ngTablePlugins: angular js + ngTable + plugins
  *
+ * @version 0.1
+ * @author Christian Behon <christian.behon@knusperleicht.at>
+ * @url https://github.com/nucle/ng-table-plugins
+ * @license New BSD License <http://creativecommons.org/licenses/BSD/>
+ */
+(function () {
+    "use strict";
+
+    angular.module('ngTablePlugins', ['ngTablePluginsTemplates']);
+
+})();
+/**
+ * ngTablePlugins: angular js + ngTable + plugins
+ *
  * @version 0.3
  * @author Christian Behon <christian.behon@knusperleicht.at>
  * @url https://github.com/nucle/ng-table-plugins
@@ -9,7 +23,7 @@
 (function () {
     "use strict";
 
-    angular.module('ngTablePlugins', ['ngTablePluginsTemplates'])
+    angular.module('ngTablePlugins')
         .directive('ngTableColumnsVisibility', ColumnVisibility);
 
     ColumnVisibility.$inject = [];
@@ -139,6 +153,7 @@
             restrict: 'E',
             scope: {
                 columns: '=',
+                data: '=',
                 id: '@',
                 storage: '@'
             },
@@ -148,6 +163,13 @@
         };
 
         function link(scope, element, attrs) {
+
+            scope.$watch('data', function (c, oldValue) {
+                console.log(c.getData);
+                angular.forEach(c.getData, function (row) {
+                    console.log(row.name);
+                });
+            });
 
         }
     }

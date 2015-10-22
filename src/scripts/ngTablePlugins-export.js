@@ -19,6 +19,7 @@
             restrict: 'E',
             scope: {
                 columns: '=',
+                data: '=',
                 id: '@',
                 storage: '@'
             },
@@ -28,6 +29,13 @@
         };
 
         function link(scope, element, attrs) {
+
+            scope.$watch('data', function (c, oldValue) {
+                console.log(c.getData);
+                angular.forEach(c.getData, function (row) {
+                    console.log(row.name);
+                });
+            });
 
         }
     }
