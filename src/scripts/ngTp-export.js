@@ -10,11 +10,11 @@
     "use strict";
 
     angular.module('ngTablePlugins')
-        .directive('ngTableExporter', Exporter);
+        .directive('ngTpExporter', ngTpExporter);
 
-    Exporter.$inject = [];
+    ngTpExporter.$inject = [];
 
-    function Exporter() {
+    function ngTpExporter() {
         return {
             restrict: 'E',
             scope: {

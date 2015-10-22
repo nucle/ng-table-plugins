@@ -10,21 +10,23 @@
     "use strict";
 
     angular.module('ngTablePlugins')
-        .directive('ngTableColumnsVisibility', ColumnVisibility);
+        .directive('ngTpColumnVisibility', ngTpColumnVisibility);
 
-    ColumnVisibility.$inject = [];
+    ngTpColumnVisibility.$inject = ['ngTpStorage'];
 
-    function ColumnVisibility() {
+    function ngTpColumnVisibility(ngTpStorage) {
 
         var hasStorage = false;
         var tableId = '';
+        var exclude = {};
 
         return {
             restrict: 'E',
             scope: {
                 columns: '=',
                 id: '@',
-                storage: '@'
+                storage: '@',
+                exclude: '@'
             },
             replace: true,
             templateUrl: 'templates/column-visibility.html',
@@ -41,9 +43,9 @@
             scope.$watch('columns', function (columns, oldValue) {
                 angular.forEach(columns, function (column) {
                     if (hasStorage === 'true') {
-                        var visible = scope.ctrl.getValue(column.title());
+                        var visible = ngTpStorage.getValue(column.title());
                         if (visible != null) {
-                            column.show(visible == 0);
+                            column.show(visible === 'true');
                         }
                     } else {
                         column.show(true);
@@ -55,65 +57,46 @@
         function checkAttributes(attrs, scope) {
             if ("id" in attrs) {
                 tableId = attrs.id;
-                scope.ctrl.setTableId(tableId);
+                ngTpStorage.setPrefix(tableId);
             }
             if ("saveState" in attrs) {
                 hasStorage = attrs.saveState;
             }
             if ("storageType" in attrs) {
-                scope.ctrl.setStorageType(attrs.storageType);
+                ngTpStorage.setStorageType(attrs.storageType);
+            }
+            if ("exclude" in attrs) {
+                scope.ctrl.setExcludedColumns(scope.$eval(attrs.exclude));
             }
         }
     }
 
-    VisibilityCtrl.$inject = [];
+    VisibilityCtrl.$inject = ['ngTpStorage'];
 
-    function VisibilityCtrl() {
+    function VisibilityCtrl(ngTpStorage) {
+
         var vm = this;
-
-        vm.id = '';
-        vm.storageType = 0;
-        vm.getValue = getValue;
         vm.onColumnClicked = onColumnClicked;
-        vm.setTableId = setTableId;
-        vm.setStorageType = setStorageType;
+        vm.isRowVisible = isRowVisible;
+        vm.setExcludedColumns = setExcludedColumns;
+        vm.excludedColumns = {};
 
-        function setTableId(id) {
-            vm.id = id;
+        function setExcludedColumns(excludedColumns) {
+            vm.excludedColumns = excludedColumns;
         }
 
-        function setStorageType(type) {
-            vm.storageType = type;
+        function isRowVisible(index) {
+            return vm.excludedColumns.indexOf(index) <= -1;
         }
 
         function onColumnClicked(column) {
             if (column.show()) {
                 column.show(false);
-                if (vm.storageType === 0) {
-                    sessionStorage.setItem(key(column.title()), 1);
-                } else {
-                    localStorage.setItem(key(column.title()), 1);
-                }
+                ngTpStorage.setValue(column.title(), false);
             } else {
                 column.show(true);
-                if (vm.storageType == 0) {
-                    sessionStorage.setItem(key(column.title()), 0);
-                } else {
-                    localStorage.setItem(key(column.title()), 0);
-                }
+                ngTpStorage.setValue(column.title(), true);
             }
-        }
-
-        function getValue(val) {
-            if (vm.storageType === 0) {
-                return sessionStorage.getItem(key(val));
-            } else {
-                return localStorage.getItem(key(val));
-            }
-        }
-
-        function key(value) {
-            return value + vm.id;
         }
     }
 })();

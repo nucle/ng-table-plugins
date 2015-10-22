@@ -9,7 +9,7 @@
 (function () {
     "use strict";
 
-    angular.module('ngTablePlugins', ['ngTablePluginsTemplates']);
+    angular.module('ngTablePlugins', ['ngTpTemplates']);
 
 })();
 /**
@@ -24,21 +24,23 @@
     "use strict";
 
     angular.module('ngTablePlugins')
-        .directive('ngTableColumnsVisibility', ColumnVisibility);
+        .directive('ngTpColumnVisibility', ngTpColumnVisibility);
 
-    ColumnVisibility.$inject = [];
+    ngTpColumnVisibility.$inject = ['ngTpStorage'];
 
-    function ColumnVisibility() {
+    function ngTpColumnVisibility(ngTpStorage) {
 
         var hasStorage = false;
         var tableId = '';
+        var exclude = {};
 
         return {
             restrict: 'E',
             scope: {
                 columns: '=',
                 id: '@',
-                storage: '@'
+                storage: '@',
+                exclude: '@'
             },
             replace: true,
             templateUrl: 'templates/column-visibility.html',
@@ -55,9 +57,9 @@
             scope.$watch('columns', function (columns, oldValue) {
                 angular.forEach(columns, function (column) {
                     if (hasStorage === 'true') {
-                        var visible = scope.ctrl.getValue(column.title());
+                        var visible = ngTpStorage.getValue(column.title());
                         if (visible != null) {
-                            column.show(visible == 0);
+                            column.show(visible === 'true');
                         }
                     } else {
                         column.show(true);
@@ -69,65 +71,46 @@
         function checkAttributes(attrs, scope) {
             if ("id" in attrs) {
                 tableId = attrs.id;
-                scope.ctrl.setTableId(tableId);
+                ngTpStorage.setPrefix(tableId);
             }
             if ("saveState" in attrs) {
                 hasStorage = attrs.saveState;
             }
             if ("storageType" in attrs) {
-                scope.ctrl.setStorageType(attrs.storageType);
+                ngTpStorage.setStorageType(attrs.storageType);
+            }
+            if ("exclude" in attrs) {
+                scope.ctrl.setExcludedColumns(scope.$eval(attrs.exclude));
             }
         }
     }
 
-    VisibilityCtrl.$inject = [];
+    VisibilityCtrl.$inject = ['ngTpStorage'];
 
-    function VisibilityCtrl() {
+    function VisibilityCtrl(ngTpStorage) {
+
         var vm = this;
-
-        vm.id = '';
-        vm.storageType = 0;
-        vm.getValue = getValue;
         vm.onColumnClicked = onColumnClicked;
-        vm.setTableId = setTableId;
-        vm.setStorageType = setStorageType;
+        vm.isRowVisible = isRowVisible;
+        vm.setExcludedColumns = setExcludedColumns;
+        vm.excludedColumns = {};
 
-        function setTableId(id) {
-            vm.id = id;
+        function setExcludedColumns(excludedColumns) {
+            vm.excludedColumns = excludedColumns;
         }
 
-        function setStorageType(type) {
-            vm.storageType = type;
+        function isRowVisible(index) {
+            return vm.excludedColumns.indexOf(index) <= -1;
         }
 
         function onColumnClicked(column) {
             if (column.show()) {
                 column.show(false);
-                if (vm.storageType === 0) {
-                    sessionStorage.setItem(key(column.title()), 1);
-                } else {
-                    localStorage.setItem(key(column.title()), 1);
-                }
+                ngTpStorage.setValue(column.title(), false);
             } else {
                 column.show(true);
-                if (vm.storageType == 0) {
-                    sessionStorage.setItem(key(column.title()), 0);
-                } else {
-                    localStorage.setItem(key(column.title()), 0);
-                }
+                ngTpStorage.setValue(column.title(), true);
             }
-        }
-
-        function getValue(val) {
-            if (vm.storageType === 0) {
-                return sessionStorage.getItem(key(val));
-            } else {
-                return localStorage.getItem(key(val));
-            }
-        }
-
-        function key(value) {
-            return value + vm.id;
         }
     }
 })();
@@ -135,7 +118,7 @@
 /**
  * ngTablePlugins: angular js + ngTable + plugins
  *
- * @version 0.1
+ * @version 0.3
  * @author Christian Behon <christian.behon@knusperleicht.at>
  * @url https://github.com/nucle/ng-table-plugins
  * @license New BSD License <http://creativecommons.org/licenses/BSD/>
@@ -144,37 +127,53 @@
     "use strict";
 
     angular.module('ngTablePlugins')
-        .directive('ngTableExporter', Exporter);
+        .factory('ngTpStorage', ngTpStorage);
 
-    Exporter.$inject = [];
+    ngTpStorage.$inject = [];
 
-    function Exporter() {
+    function ngTpStorage() {
+        var vm = this;
+        vm.prefix = '';
+        vm.storageType = 0;
+
         return {
-            restrict: 'E',
-            scope: {
-                columns: '=',
-                data: '=',
-                id: '@',
-                storage: '@'
-            },
-            replace: true,
-            templateUrl: 'templates/column-visibility.html',
-            link: link
+            getValue: getValue,
+            setValue: setValue,
+            setPrefix: setPrefix,
+            setStorageType: setStorageType
         };
+        function setPrefix(prefix) {
+            vm.prefix = prefix;
+        }
 
-        function link(scope, element, attrs) {
+        function setStorageType(type) {
+            vm.storageType = type;
+        }
 
-            scope.$watch('data', function (c, oldValue) {
-                console.log(c.getData);
-                angular.forEach(c.getData, function (row) {
-                    console.log(row.name);
-                });
-            });
+        function setValue(key, val) {
+            if (vm.storageType === 0) {
+                sessionStorage.setItem(prefix(key), val);
+            } else {
+                localStorage.setItem(prefix(key), val);
+            }
+        }
 
+        function getValue(val) {
+            if (vm.storageType === 0) {
+                return sessionStorage.getItem(prefix(val));
+            } else {
+                return localStorage.getItem(prefix(val));
+            }
+        }
+
+        function prefix(value) {
+            return value + vm.prefix;
         }
     }
 })();
-angular.module('ngTablePluginsTemplates', []).run(['$templateCache', function($templateCache) {
+angular.module('ngTpTemplates', []).run(['$templateCache', function($templateCache) {
   $templateCache.put("templates/column-visibility.html",
-    "<div class=btn-group><div class=dropwon><button class=\"ngtp-dropdown-btn btn dropdown-toggle\" type=button data-toggle=dropdown>Hide/show columns <span class=caret></span></button><ul class=dropdown-menu><li data-ng-repeat=\"column in columns\" data-ng-click=ctrl.onColumnClicked(column);$event.stopPropagation(); class=ngtp-noselect><div class=checkbox data-ng-if=!column.show()><label class=ngtp-checkbox-label-disabled><input data-ng-if=!column.show() type=checkbox class=ngtp-checkbox-disabled> <span class=ngtp-checkbox-text-disabled>{{column.title()}}</span></label></div><div class=checkbox data-ng-if=column.show()><label class=ngtp-checkbox-label-enabled><input data-ng-if=column.show() class=ngtp-checkbox-enabled type=checkbox checked> <span class=ngtp-checkbox-text-enabled>{{column.title()}}</span></label></div></li></ul></div></div>");
+    "<div class=btn-group><div class=dropwon><button class=\"ngtp-dropdown-btn btn dropdown-toggle\" type=button data-toggle=dropdown>Hide/show columns <span class=caret></span></button><ul class=dropdown-menu><li data-ng-repeat=\"column in columns\" data-ng-click=ctrl.onColumnClicked(column);$event.stopPropagation(); data-ng-if=ctrl.isRowVisible($index) class=ngtp-noselect><div class=checkbox data-ng-if=!column.show()><label class=ngtp-checkbox-label-disabled><input data-ng-if=!column.show() type=checkbox class=ngtp-checkbox-disabled> <span class=ngtp-checkbox-text-disabled>{{column.title()}}</span></label></div><div class=checkbox data-ng-if=column.show()><label class=ngtp-checkbox-label-enabled><input data-ng-if=column.show() class=ngtp-checkbox-enabled type=checkbox checked> <span class=ngtp-checkbox-text-enabled>{{column.title()}}</span></label></div></li></ul></div></div>");
+  $templateCache.put("templates/export.html",
+    "");
 }]);

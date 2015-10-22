@@ -23,9 +23,11 @@ module.exports = function (grunt) {
             js: {
                 src: [
                     // app
-                    'src/scripts/ngTablePlugins-module.js',
-                    'src/scripts/ngTablePlugins-column-visibility.js',
-                    'src/scripts/ngTablePlugins-export.js',
+                    'src/scripts/ngTp-module.js',
+                    'src/scripts/ngTp-column-visibility.js',
+                   // 'src/scripts/ngTp-export.js',
+                    'src/scripts/ngTp-storage.js',
+
                     'dist/ng-table-plugins-templates.js'
                 ],
                 dest: 'dist/ng-table-plugins.js'
@@ -86,7 +88,7 @@ module.exports = function (grunt) {
             options: {
                 base: 'src/',
                 singleModule: true,
-                module: 'ngTablePluginsTemplates',
+                module: 'ngTpTemplates',
                 htmlmin: {
                     collapseBooleanAttributes: true,
                     collapseWhitespace: true,

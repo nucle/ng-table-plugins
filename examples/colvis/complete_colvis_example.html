@@ -31,9 +31,8 @@
 
     <p><strong>Count per page:</strong> {{tableParams.count()}}</p>
 
-    <ng-table-columns-visibility id="employee" save-state="true" storage-type="1" columns="ctrl.cols"></ng-table-columns-visibility>
+    <ng-tp-column-visibility id="employee" exclude="[0,2]" save-state="true" storage-type="1" columns="ctrl.cols"></ng-tp-column-visibility>
 
-    <ng-table-exporter data="tableParams" ></ng-table-exporter>
 
     <table data-ng-table="tableParams" data-ng-table-columns-binding="ctrl.cols" class="table ng-table-responsive">
         <tr data-ng-repeat="user in $data">

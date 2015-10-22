@@ -9,6 +9,6 @@
 (function () {
     "use strict";
 
-    angular.module('ngTablePlugins', ['ngTablePluginsTemplates']);
+    angular.module('ngTablePlugins', ['ngTpTemplates']);
 
 })();
