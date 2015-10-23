@@ -9,6 +9,7 @@
         <ul class="dropdown-menu">
             <li data-ng-repeat="column in columns"
                 data-ng-click="ctrl.onColumnClicked(column);$event.stopPropagation();"
+                data-ng-if="ctrl.isRowVisible($index)"
                 class="ngtp-noselect">
 
                 <div class="checkbox" data-ng-if="!column.show()">

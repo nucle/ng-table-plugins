@@ -23,7 +23,11 @@ module.exports = function (grunt) {
             js: {
                 src: [
                     // app
-                    'src/scripts/column-visibility.js',
+                    'src/scripts/ngtp-module.js',
+                    'src/scripts/ngtp-column-visibility.js',
+                   // 'src/scripts/ngTp-export.js',
+                    'src/scripts/ngtp-storage.js',
+
                     'dist/ng-table-plugins-templates.js'
                 ],
                 dest: 'dist/ng-table-plugins.js'
@@ -84,7 +88,7 @@ module.exports = function (grunt) {
             options: {
                 base: 'src/',
                 singleModule: true,
-                module: 'ngTablePluginsTemplates',
+                module: 'ngTpTemplates',
                 htmlmin: {
                     collapseBooleanAttributes: true,
                     collapseWhitespace: true,
@@ -106,7 +110,7 @@ module.exports = function (grunt) {
             "prod": {
                 "web/config.js": function (fs, fd, done) {
                     fs.writeSync(fd, 'var debug = false;\n');
-                    fs.writeSync(fd, 'var version = "v0.7.7";');
+                    fs.writeSync(fd, 'var version = "v0.0.1";');
                     done();
                 }
             }
@@ -114,4 +118,5 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('build', ['clean', 'html2js', 'concat', 'uglify', 'cssmin', 'clean:rem', 'copy']);
+    grunt.registerTask('release', ['clean', 'html2js', 'concat', 'uglify', 'cssmin', 'clean:rem', 'copy']);
 };

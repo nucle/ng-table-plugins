@@ -1,20 +1,6 @@
 /**
  * ngTablePlugins: angular js + ngTable + plugins
  *
- * @version 0.1
- * @author Christian Behon <christian.behon@knusperleicht.at>
- * @url https://github.com/nucle/ng-table-plugins
- * @license New BSD License <http://creativecommons.org/licenses/BSD/>
- */
-(function () {
-    "use strict";
-
-    angular.module('ngTablePlugins', ['ngTpTemplates']);
-
-})();
-/**
- * ngTablePlugins: angular js + ngTable + plugins
- *
  * @version 0.3
  * @author Christian Behon <christian.behon@knusperleicht.at>
  * @url https://github.com/nucle/ng-table-plugins
@@ -114,66 +100,3 @@
         }
     }
 })();
-
-/**
- * ngTablePlugins: angular js + ngTable + plugins
- *
- * @version 0.3
- * @author Christian Behon <christian.behon@knusperleicht.at>
- * @url https://github.com/nucle/ng-table-plugins
- * @license New BSD License <http://creativecommons.org/licenses/BSD/>
- */
-(function () {
-    "use strict";
-
-    angular.module('ngTablePlugins')
-        .factory('ngTpStorage', ngTpStorage);
-
-    ngTpStorage.$inject = [];
-
-    function ngTpStorage() {
-        var vm = this;
-        vm.prefix = '';
-        vm.storageType = 0;
-
-        return {
-            getValue: getValue,
-            setValue: setValue,
-            setPrefix: setPrefix,
-            setStorageType: setStorageType
-        };
-        function setPrefix(prefix) {
-            vm.prefix = prefix;
-        }
-
-        function setStorageType(type) {
-            vm.storageType = type;
-        }
-
-        function setValue(key, val) {
-            if (vm.storageType === 0) {
-                sessionStorage.setItem(prefix(key), val);
-            } else {
-                localStorage.setItem(prefix(key), val);
-            }
-        }
-
-        function getValue(val) {
-            if (vm.storageType === 0) {
-                return sessionStorage.getItem(prefix(val));
-            } else {
-                return localStorage.getItem(prefix(val));
-            }
-        }
-
-        function prefix(value) {
-            return value + vm.prefix;
-        }
-    }
-})();
-angular.module('ngTpTemplates', []).run(['$templateCache', function($templateCache) {
-  $templateCache.put("templates/column-visibility.html",
-    "<div class=btn-group><div class=dropwon><button class=\"ngtp-dropdown-btn btn dropdown-toggle\" type=button data-toggle=dropdown>Hide/show columns <span class=caret></span></button><ul class=dropdown-menu><li data-ng-repeat=\"column in columns\" data-ng-click=ctrl.onColumnClicked(column);$event.stopPropagation(); data-ng-if=ctrl.isRowVisible($index) class=ngtp-noselect><div class=checkbox data-ng-if=!column.show()><label class=ngtp-checkbox-label-disabled><input data-ng-if=!column.show() type=checkbox class=ngtp-checkbox-disabled> <span class=ngtp-checkbox-text-disabled>{{column.title()}}</span></label></div><div class=checkbox data-ng-if=column.show()><label class=ngtp-checkbox-label-enabled><input data-ng-if=column.show() class=ngtp-checkbox-enabled type=checkbox checked> <span class=ngtp-checkbox-text-enabled>{{column.title()}}</span></label></div></li></ul></div></div>");
-  $templateCache.put("templates/export.html",
-    "");
-}]);
