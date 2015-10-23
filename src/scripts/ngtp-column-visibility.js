@@ -18,7 +18,6 @@
 
         var hasStorage = false;
         var tableId = '';
-        var exclude = {};
 
         return {
             restrict: 'E',
@@ -40,11 +39,11 @@
 
         function link(scope, element, attrs) {
             checkAttributes(attrs, scope);
-            scope.$watch('columns', function (columns, oldValue) {
+            scope.$watch('columns', function (columns) {
                 angular.forEach(columns, function (column) {
                     if (hasStorage === 'true') {
                         var visible = ngTpStorage.getValue(column.title());
-                        if (visible != null) {
+                        if (visible !== null) {
                             column.show(visible === 'true');
                         }
                     } else {
