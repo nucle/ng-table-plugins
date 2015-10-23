@@ -6,3 +6,5 @@ languages:
 exclude_paths:
 - "examples/**/*"
 - "dist/**/*"
+- "dist/ng-table-plugins.js"
+- "examples/ng-table-plugins.js"
