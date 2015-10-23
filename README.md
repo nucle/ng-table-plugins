@@ -12,17 +12,17 @@ Column Visibility
 
 ## **Plugins**
 
-### **Column Visibility**
+#### **Column Visibility**
 Column visibility provides a simple and effective way to hide and show columns.
 
-### Initialisation
+#### **Initialisation**
 Initialisation of the column visibility plugin can be performed in this way:
 ```
 <ng-tp-column-visibility columns="ctrl.columns"></ng-tp-column-visibility>
 <table data-ng-table="tableParams" data-ng-table-columns-binding="ctrl.columns" class="table ng-table-responsive">...</table>
 ```
 
-### Options
+#### **Options**
 |  Option                | Example                             |  Description   |            
  ----------------- | ---------------------------- |----|
 | `id` |   id="employee"         | This parameter is necessary when multiple tables use the attribute save-state otherwise each table column with the same name will be hidden or shown in all tables.|
