@@ -2,6 +2,10 @@
 Welcome to ngTablePlugins!
 ===================
 
+<a href="https://codeclimate.com/github/nucle/ng-table-plugins"><img src="https://codeclimate.com/github/nucle/ng-table-plugins/badges/gpa.svg" /></a>
+
+[![Code Climate](https://codeclimate.com/github/nucle/ng-table-plugins/badges/gpa.svg)](https://codeclimate.com/github/nucle/ng-table-plugins)
+
 ## **Examples**
 
 These **examples** show how to use ngTablePlugins:

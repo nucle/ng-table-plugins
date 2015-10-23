@@ -56,7 +56,7 @@ module.exports = function (grunt) {
         cssmin: {
             css: {
                 files: {
-                    'web/wkg-tool.min.css': 'src/css/wkg-tool.css'
+                    'web/tool.min.css': 'src/css/tool.css'
                 },
                 options: {
                     banner: '<%= banner %>'
