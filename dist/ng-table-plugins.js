@@ -32,7 +32,6 @@
 
         var hasStorage = false;
         var tableId = '';
-        var exclude = {};
 
         return {
             restrict: 'E',
@@ -54,11 +53,11 @@
 
         function link(scope, element, attrs) {
             checkAttributes(attrs, scope);
-            scope.$watch('columns', function (columns, oldValue) {
+            scope.$watch('columns', function (columns) {
                 angular.forEach(columns, function (column) {
                     if (hasStorage === 'true') {
                         var visible = ngTpStorage.getValue(column.title());
-                        if (visible != null) {
+                        if (visible !== null) {
                             column.show(visible === 'true');
                         }
                     } else {
@@ -132,9 +131,9 @@
     ngTpStorage.$inject = [];
 
     function ngTpStorage() {
-        var vm = this;
-        vm.prefix = '';
-        vm.storageType = 0;
+
+        var prefix = '';
+        var storageType = 0;
 
         return {
             getValue: getValue,
@@ -142,32 +141,32 @@
             setPrefix: setPrefix,
             setStorageType: setStorageType
         };
-        function setPrefix(prefix) {
-            vm.prefix = prefix;
+        function setPrefix(pref) {
+            prefix = pref;
         }
 
         function setStorageType(type) {
-            vm.storageType = type;
+            storageType = type;
         }
 
         function setValue(key, val) {
-            if (vm.storageType === 0) {
-                sessionStorage.setItem(prefix(key), val);
+            if (storageType === 0) {
+                sessionStorage.setItem(addPrefix(key), val);
             } else {
-                localStorage.setItem(prefix(key), val);
+                localStorage.setItem(addPrefix(key), val);
             }
         }
 
         function getValue(val) {
-            if (vm.storageType === 0) {
-                return sessionStorage.getItem(prefix(val));
+            if (storageType === 0) {
+                return sessionStorage.getItem(addPrefix(val));
             } else {
-                return localStorage.getItem(prefix(val));
+                return localStorage.getItem(addPrefix(val));
             }
         }
 
-        function prefix(value) {
-            return value + vm.prefix;
+        function addPrefix(value) {
+            return value + prefix;
         }
     }
 })();

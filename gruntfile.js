@@ -114,9 +114,12 @@ module.exports = function (grunt) {
                     done();
                 }
             }
+        },
+        jshint: {
+            all: ['src/**/*.js']
         }
     });
 
-    grunt.registerTask('build', ['clean', 'html2js', 'concat', 'uglify', 'cssmin', 'clean:rem', 'copy']);
+    grunt.registerTask('build', ['clean', 'html2js', 'concat', 'uglify', 'cssmin', 'clean:rem', 'copy', 'jshint']);
     grunt.registerTask('release', ['clean', 'html2js', 'concat', 'uglify', 'cssmin', 'clean:rem', 'copy']);
 };
